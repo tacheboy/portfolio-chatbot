@@ -4,6 +4,15 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const fs = require("fs");
+const router = express.Router();
+
+router.get("/", (req, res) => {
+  res.json({ message: "Hello from Express on Netlify!" });
+});
+
+app.use("/.netlify/functions/server", router);
+
+module.exports.handler = serverless(app);
 
 dotenv.config();
 
