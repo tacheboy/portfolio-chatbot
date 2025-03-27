@@ -1,0 +1,211 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc; /* Soft background */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Theme Colors */
+:root {
+  --primary-color: #1e3a8a;   /* Deep Blue */
+  --secondary-color: #3b82f6; /* Lighter Blue */
+  --accent-color: #facc15;    /* Warm Yellow */
+  --text-color: #333;
+  --bg-color: #f8fafc;
+}
+
+/* Header & Navigation */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  color: #fff;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.navbar {
+  position: relative;
+}
+.nav-list {
+  display: flex;
+  list-style: none;
+}
+.nav-list li {
+  margin-left: 1.5rem;
+}
+.nav-list a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+.nav-list a:hover {
+  color: var(--accent-color);
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Sections */
+.section {
+  opacity: 0;                 /* For fade-in */
+  transform: translateY(30px);/* For fade-in */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  padding: 3rem 2rem;
+  margin: 0 auto;
+  max-width: 800px;
+  background: #fff;
+  margin-top: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bg-light {
+  background-color: #f3f3f3;
+  box-shadow: none;
+}
+
+/* Headings */
+h1, h2 {
+  margin-bottom: 1rem;
+}
+h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+}
+h2 {
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+/* Skills List */
+.skills-list {
+  list-style: disc inside;
+  margin-left: 1rem;
+  line-height: 1.8;
+}
+
+/* Buttons */
+.btn, .contact-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  background-color: var(--secondary-color);
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+.btn:hover, .contact-btn:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+/* Contact Buttons */
+.contact-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.linkedin {
+  background-color: #0077b5;
+}
+.linkedin:hover {
+  background-color: #005580;
+}
+.github {
+  background-color: #24292e;
+}
+.github:hover {
+  background-color: #3a3f44;
+}
+.email {
+  background-color: #888;
+}
+.email:hover {
+  background-color: #666;
+}
+
+/* Chatbox */
+.chat-box {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+.chat-box p {
+  margin-bottom: 0.5rem;
+}
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.chat-input input {
+  flex: 1;
+  padding: 0.5rem;
+}
+.chat-input button {
+  padding: 0.5rem 1rem;
+  background-color: var(--secondary-color);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.chat-input button:hover {
+  background-color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-list {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: var(--primary-color);
+    flex-direction: column;
+    align-items: flex-start;
+    width: 200px;
+    border: 1px solid #eee;
+    display: none; /* Hidden by default, toggled by JS */
+  }
+  .nav-list li {
+    margin: 1rem 0;
+    margin-left: 1rem;
+  }
+  .nav-toggle {
+    display: block;
+    color: #fff;
+  }
+}

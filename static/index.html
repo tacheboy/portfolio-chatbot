@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="header">
+    <div class="logo">My Portfolio</div>
+    <nav class="navbar" id="navbar">
+      <ul class="nav-list">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle">☰</button>
+    </nav>
+  </header>
+
+  <!-- Introduction Section -->
+  <section class="section" id="introduction">
+    <div class="container">
+      <h1>Hi, I'm Tushar Moitra</h1>
+      <p>
+        I'm a Data and DevOps enthusiast with a passion for building robust,
+        scalable solutions. I enjoy creating meaningful projects that combine
+        data-driven insights with efficient deployment pipelines.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="section bg-light" id="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <ul class="skills-list">
+        <li>Data Analysis & Visualization (Python, R, SQL)</li>
+        <li>Machine Learning & AI (TensorFlow, Scikit-learn)</li>
+        <li>DevOps (Docker, Kubernetes, CI/CD pipelines)</li>
+        <li>Cloud Platforms (AWS, Azure, GCP)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Resume Section -->
+  <section class="section" id="resume">
+    <div class="container">
+      <h2>Resume Overview</h2>
+      <p>
+        For more details about my background, experience, and projects, 
+        you can download my resume by clicking the link below.
+      </p>
+      <a 
+        href="https://drive.google.com/uc?export=download&id=1p3GnaVr_Gjk2WDLTFYj7W1gESPn6pbwJ" 
+        class="btn" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        Download Resume
+      </a>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section bg-light" id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Feel free to reach out to me on any of these platforms:</p>
+      <div class="contact-buttons">
+        <a 
+          href="https://www.linkedin.com/in/tushar-moitra-704469245/" 
+          class="contact-btn linkedin" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+        <a 
+          href="https://github.com/tacheboy" 
+          class="contact-btn github" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <a 
+          href="mailto:tmoitra78@gmail.com" 
+          class="contact-btn email"
+        >
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="chatbot">
+    <div class="container">
+      <h2>Ask About My Resume</h2>
+      <div id="chat-box" class="chat-box">
+        <!-- Chat messages will appear here -->
+      </div>
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your question..." />
+        <button onclick="askChatbot()" id="send-btn">Send</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Tushar. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
