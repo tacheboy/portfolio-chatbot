@@ -1,0 +1,8 @@
+[build]
+  functions = "functions" # Netlify serverless functions directory
+  publish = "static" # Directory containing static frontend files
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server/:splat"
+  status = 200

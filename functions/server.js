@@ -1,10 +1,19 @@
 const express = require("express");
+const serverless = require("serverless-http");
+
+const app = express();
+const router = express.Router();
+
+
+
+// const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+dotenv.config();
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const fs = require("fs");
-const router = express.Router();
+// const router = express.Router();
 
 router.get("/", (req, res) => {
   res.json({ message: "Hello from Express on Netlify!" });
@@ -14,27 +23,24 @@ app.use("/.netlify/functions/server", router);
 
 module.exports.handler = serverless(app);
 
-dotenv.config();
 
-const app = express();
-app.use(express.static(path.join(__dirname, "static")));
+// const app = express();
+app.use(express.static(path.join(__dirname, "../static")));
 app.use(bodyParser.json());
 
 const API_KEY = process.env.GEMINI_API_KEY;
+// console.log(API_KEY);
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
-// Load resume chunks (preprocessed offline) into memory
 let resumeChunks = [];
 try {
-  const data = fs.readFileSync(path.join(__dirname, "resume_chunks.json"), "utf8");
+  const data = fs.readFileSync(path.join(__dirname, "../resume_chunks.json"), "utf8");
   resumeChunks = JSON.parse(data);
   console.log(`Loaded ${resumeChunks.length} resume chunks`);
 } catch (err) {
   console.error("Error loading resume chunks:", err);
 }
 
-// Dummy function for computing cosine similarity between two embeddings
-// (In production, use a proper math library.)
 function cosineSimilarity(a, b) {
   const dotProduct = a.reduce((sum, val, i) => sum + val * b[i], 0);
   const normA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0));
@@ -42,33 +48,29 @@ function cosineSimilarity(a, b) {
   return dotProduct / (normA * normB);
 }
 
-// Dummy function to generate an embedding for the query.
-// Replace this with a call to a free embedding service or local model.
 async function getEmbedding(text) {
-  // For demonstration, return a fixed dummy vector.
-  // In reality, you'd call an embedding API or use a local model.
-  return [0.1, 0.2, 0.3, 0.4, 0.5]; // Adjust dimension as needed.
+  return [0.1, 0.2, 0.3, 0.4, 0.5]; 
 }
 
-// Retrieve the most relevant resume chunks given a query.
+
 async function retrieveResumeContext(query, topK = 2) {
   const queryEmbedding = await getEmbedding(query);
-  // Compute similarity for each chunk
+  
   const scored = resumeChunks.map(chunk => ({
     chunk: chunk.chunk,
     score: cosineSimilarity(queryEmbedding, chunk.embedding)
   }));
-  // Sort by highest similarity
+  
   scored.sort((a, b) => b.score - a.score);
   // Return top K chunks
   return scored.slice(0, topK).map(item => item.chunk);
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "index.html"));
+  res.sendFile(path.join(__dirname, "../static", "index.html"));
 });
 
-// The chatbot endpoint that uses RAG on your resume
+
 app.post("/ask", async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -76,7 +78,7 @@ app.post("/ask", async (req, res) => {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    // Retrieve relevant resume context
+
     const contextChunks = await retrieveResumeContext(userMessage, 2); // Top 2 chunks
 
     // Build structured prompt for better AI responses
@@ -84,18 +86,18 @@ app.post("/ask", async (req, res) => {
     You are an AI assistant helping to answer questions based on my resume. 
     Use the provided resume context to generate a structured response.
 
-    **Resume Context:**
+    Resume Context:
     ${contextChunks.join("\n\n")}
 
-    **User Question:** ${userMessage}
+    User Question: ${userMessage}
 
-    **Provide a well-formatted answer in this structure:**
-    - **Relevant Experience:** (Summarize relevant details)
-    - **Key Skills:** (List key skills related to the query)
-    - **Projects/Work:** (Mention relevant projects or work)
-    - **Suggestions (if applicable):** (Provide additional useful information)
+    Provide a well-formatted answer in this structure:
+    - Relevant Experience: (Summarize relevant details)
+    - Key Skills: (List key skills related to the query)
+    - Projects/Work: (Mention relevant projects or work)
+    - Suggestions (if applicable): (Provide additional useful information)
 
-    **Your Answer:**
+    Your Answer:
     `;
 
     // Send request to Gemini API
